@@ -22,7 +22,7 @@ export default function HomeScreen(props) {
   }, []);
 
   const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
+    navigation.navigate("Recipe", { id: item.recipeId });
   };
 
   const renderRecipes = ({ item }) => (

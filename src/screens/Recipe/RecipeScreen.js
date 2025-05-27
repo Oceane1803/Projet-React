@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -6,15 +6,12 @@ import {
   Image,
   Dimensions,
   TouchableHighlight,
+  ActivityIndicator,
 } from "react-native";
 import styles from "./styles";
-import { useSharedValue } from 'react-native-reanimated';
-import Carousel, { Pagination } from 'react-native-reanimated-carousel';
-import {
-  getIngredientName,
-  getCategoryName,
-  getCategoryById,
-} from "../../data/MockDataAPI";
+import { useSharedValue } from "react-native-reanimated";
+import Carousel, { Pagination } from "react-native-reanimated-carousel";
+import axios from "axios";
 import BackButton from "../../components/BackButton/BackButton";
 import ViewIngredientsButton from "../../components/ViewIngredientsButton/ViewIngredientsButton";
 
@@ -22,25 +19,57 @@ const { width: viewportWidth } = Dimensions.get("window");
 
 export default function RecipeScreen(props) {
   const { navigation, route } = props;
-  const item = route.params?.item;
-  const category = getCategoryById(item.categoryId);
-  const title = getCategoryName(category.id);
-  const slider1Ref = useRef(null)
-  const progress = useSharedValue(0)
+  const recipeId = route.params?.id;
+
+  const [item, setItem] = useState(null);
+  const progress = useSharedValue(0);
+  const slider1Ref = useRef(null);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTransparent: "true",
-      headerLeft: () => (
-        <BackButton
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-      ),
+      headerTransparent: true,
+      headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
       headerRight: () => <View />,
     });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.43.78:3000/recettes/${recipeId}`)
+      .then((response) => {
+        const data = response.data;
+        
+        console.log("Données reçues de l'API:", data);
+        
+        // Utiliser les vrais noms de la BDD
+        const recette = {
+          id: data.id_recettes,
+          title: data.Nom || "Titre non disponible",
+          description: data.Description || "Description non disponible",
+          instruction: data.Instruction || "Instructions non disponibles",
+          time: data.temps_preparation && typeof data.temps_preparation === 'string' 
+            ? parseInt(data.temps_preparation.split(":")[1]) 
+            : 0,
+          imageUrls: typeof data.image_url === 'string' 
+            ? [data.image_url]
+            : [],
+          category: data.nom_categorie || "Non catégorisé",
+          ingredients: data.ingredients || [],
+        };
+
+        console.log("Objet recette créé:", recette);
+        setItem(recette);
+      })
+      .catch((error) => {
+        console.error("Erreur API:", error);
+        console.error("Détails de l'erreur:", error.response?.data);
+        console.error("Status de l'erreur:", error.response?.status);
+      });
+  }, [recipeId]);
+
+  if (!item) {
+    return <ActivityIndicator size="large" style={{ marginTop: 50 }} />;
+  }
 
   const renderImage = ({ item }) => (
     <TouchableHighlight>
@@ -50,42 +79,30 @@ export default function RecipeScreen(props) {
     </TouchableHighlight>
   );
 
-  const onPressIngredient = (item) => {
-    var name = getIngredientName(item);
-    let ingredient = item;
-    navigation.navigate("Ingredient", { ingredient, name });
+  const onPressPagination = (index) => {
+    slider1Ref.current?.scrollTo({
+      count: index - progress.value,
+      animated: true,
+    });
   };
-
-
-  const onPressPagination = (index) =>
-    {
-      slider1Ref.current?.scrollTo({
-        count: index - progress.value,
-        animated: true,
-      })
-    }
-  
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.carouselContainer}>
         <View style={styles.carousel}>
           <Carousel
-              ref={c =>
-              {
-                slider1Ref.current = c
-              }}
+            ref={(c) => (slider1Ref.current = c)}
             loop={false}
             width={viewportWidth}
             height={viewportWidth}
             autoPlay={false}
-            data={item.photosArray}
+            data={item.imageUrls}
             scrollAnimationDuration={1000}
             renderItem={renderImage}
             onProgressChange={progress}
           />
           <Pagination.Basic
-            renderItem={(item) => (
+            renderItem={() => (
               <View
                 style={{
                   backgroundColor: "rgba(255,255,255,1)",
@@ -94,25 +111,21 @@ export default function RecipeScreen(props) {
               />
             )}
             progress={progress}
-            data={item.photosArray}
+            data={item.imageUrls}
             dotStyle={styles.paginationDot}
             containerStyle={styles.paginationContainer}
             onPress={onPressPagination}
           />
         </View>
       </View>
+
       <View style={styles.infoRecipeContainer}>
         <Text style={styles.infoRecipeName}>{item.title}</Text>
+
         <View style={styles.infoContainer}>
-          <TouchableHighlight
-            onPress={() =>
-              navigation.navigate("RecipesList", { category, title })
-            }
-          >
-            <Text style={styles.category}>
-              {getCategoryName(item.categoryId).toUpperCase()}
-            </Text>
-          </TouchableHighlight>
+          <Text style={styles.category}>
+            {(item.category || "Non catégorisé").toUpperCase()}
+          </Text>
         </View>
 
         <View style={styles.infoContainer}>
@@ -120,20 +133,26 @@ export default function RecipeScreen(props) {
             style={styles.infoPhoto}
             source={require("../../../assets/icons/time.png")}
           />
-          <Text style={styles.infoRecipe}>{item.time} minutes </Text>
+          <Text style={styles.infoRecipe}>{item.time} minutes</Text>
         </View>
 
         <View style={styles.infoContainer}>
           <ViewIngredientsButton
-            onPress={() => {
-              let ingredients = item.ingredients;
-              let title = "Ingredients for " + item.title;
-              navigation.navigate("IngredientsDetails", { ingredients, title });
-            }}
+            onPress={() =>
+              navigation.navigate("IngredientsDetails", {
+                ingredients: item.ingredients,
+                title: "Ingrédients pour " + item.title,
+              })
+            }
           />
         </View>
+
         <View style={styles.infoContainer}>
           <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoInstructionRecipe}>{item.instruction}</Text>
         </View>
       </View>
     </ScrollView>
