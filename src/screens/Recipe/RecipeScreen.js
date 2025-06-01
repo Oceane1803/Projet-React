@@ -139,8 +139,8 @@ export default function RecipeScreen(props) {
         <View style={styles.infoContainer}>
           <ViewIngredientsButton
             onPress={() =>
-              navigation.navigate("IngredientsDetails", {
-                ingredients: item.ingredients,
+              navigation.navigate('IngredientsDetails', {
+                recipeId: item.id,
                 title: "Ingrédients pour " + item.title,
               })
             }

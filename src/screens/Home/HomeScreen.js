@@ -1,12 +1,13 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 import { FlatList, Text, View, TouchableHighlight, Image } from "react-native";
 import styles from "./styles";
-import { recipes } from "../../data/dataArrays";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName } from "../../data/MockDataAPI";
 
 export default function HomeScreen(props) {
   const { navigation } = props;
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -20,6 +21,28 @@ export default function HomeScreen(props) {
       headerRight: () => <View />,
     });
   }, []);
+
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
+
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch("http://192.168.43.78:3000/recettes");
+      const json = await response.json();
+      const formattedData = json.map((item) => ({
+        recipeId: item.id_recettes,
+        title: item.Nom,
+        photo_url: item.image_url ?? "https://via.placeholder.com/150",
+        categoryId: item.id_categories,
+      }));
+      setRecipes(formattedData);
+    } catch (error) {
+      console.error("Erreur lors du chargement des recettes :", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onPressRecipe = (item) => {
     navigation.navigate("Recipe", { id: item.recipeId });
@@ -37,7 +60,16 @@ export default function HomeScreen(props) {
 
   return (
     <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
+      {!loading && (
+        <FlatList
+          vertical
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={recipes}
+          renderItem={renderRecipes}
+          keyExtractor={(item) => `${item.recipeId}`}
+        />
+      )}
     </View>
   );
 }
