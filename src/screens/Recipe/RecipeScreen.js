@@ -31,6 +31,7 @@ export default function RecipeScreen(props) {
       headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
       headerRight: () => <View />,
     });
+<<<<<<< HEAD
   }, [navigation]);
 
   useEffect(() => {
@@ -40,11 +41,25 @@ export default function RecipeScreen(props) {
         const data = response.data;
         console.log("Données reçues de l'API:", data);
 
+=======
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.43.78:3000/recettes/${recipeId}`)
+      .then((response) => {
+        const data = response.data;
+        
+        console.log("Données reçues de l'API:", data);
+        
+        // Utiliser les vrais noms de la BDD
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
         const recette = {
           id: data.id_recettes,
           title: data.Nom || "Titre non disponible",
           description: data.Description || "Description non disponible",
           instruction: data.Instruction || "Instructions non disponibles",
+<<<<<<< HEAD
           time:
             data.temps_preparation && typeof data.temps_preparation === "string"
               ? parseInt(data.temps_preparation.split(":")[1])
@@ -65,6 +80,25 @@ export default function RecipeScreen(props) {
           console.error("Détails de l'erreur:", error.response.data);
           console.error("Status de l'erreur:", error.response.status);
         }
+=======
+          time: data.temps_preparation && typeof data.temps_preparation === 'string' 
+            ? parseInt(data.temps_preparation.split(":")[1]) 
+            : 0,
+          imageUrls: typeof data.image_url === 'string' 
+            ? [data.image_url]
+            : [],
+          category: data.nom_categorie || "Non catégorisé",
+          ingredients: data.ingredients || [],
+        };
+
+        console.log("Objet recette créé:", recette);
+        setItem(recette);
+      })
+      .catch((error) => {
+        console.error("Erreur API:", error);
+        console.error("Détails de l'erreur:", error.response?.data);
+        console.error("Status de l'erreur:", error.response?.status);
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
       });
   }, [recipeId]);
 
@@ -123,11 +157,19 @@ export default function RecipeScreen(props) {
       <View style={styles.infoRecipeContainer}>
         <Text style={styles.infoRecipeName}>{item.title}</Text>
 
+<<<<<<< HEAD
         {item.category && (
           <View style={styles.infoContainer}>
             <Text style={styles.category}>{item.category.toUpperCase()}</Text>
           </View>
         )}
+=======
+        <View style={styles.infoContainer}>
+          <Text style={styles.category}>
+            {(item.category || "Non catégorisé").toUpperCase()}
+          </Text>
+        </View>
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
 
         <View style={styles.infoContainer}>
           <Image
@@ -140,7 +182,11 @@ export default function RecipeScreen(props) {
         <View style={styles.infoContainer}>
           <ViewIngredientsButton
             onPress={() =>
+<<<<<<< HEAD
               navigation.navigate("IngredientsDetails", {
+=======
+              navigation.navigate('IngredientsDetails', {
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
                 recipeId: item.id,
                 title: "Ingrédients pour " + item.title,
               })
@@ -158,4 +204,8 @@ export default function RecipeScreen(props) {
       </View>
     </ScrollView>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec

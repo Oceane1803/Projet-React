@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "backend",
   "version": "1.0.0",
   "description": "",
@@ -20,10 +21,30 @@
     "express": "^4.21.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.14.0",
+=======
+  "name": "instafood",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-community/cli-server-api": "15.1.0",
+    "@react-navigation/drawer": "7.0.0",
+    "@react-navigation/native": "^7.0.0",
+    "@react-navigation/stack": "^7.0.0",
+    "axios": "^1.8.4",
+    "expo": "^53.0.9",
+    "expo-status-bar": "~2.2.3",
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-reanimated": "~3.17.4",
+<<<<<<< HEAD
     "react-native-reanimated-carousel": "^4.0.2",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
@@ -32,4 +53,17 @@
   "devDependencies": {
     "@react-native-community/cli": "^18.0.0"
   }
+=======
+    "react-native-reanimated-carousel": "4.0.0-alpha.12",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.10.0",
+    "yarn": "^1.22.22"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-flow": "7.25.9"
+  },
+  "private": true,
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
 }
