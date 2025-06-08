@@ -119,19 +119,11 @@ export default function RecipeScreen(props) {
 
       <View style={styles.infoRecipeContainer}>
         <Text style={styles.infoRecipeName}>{item.title}</Text>
-
-<<<<<<< HEAD
         {item.category && (
           <View style={styles.infoContainer}>
             <Text style={styles.category}>{item.category.toUpperCase()}</Text>
           </View>
         )}
-=======
-        <View style={styles.infoContainer}>
-          <Text style={styles.category}>
-            {(item.category || "Non catégorisé").toUpperCase()}
-          </Text>
-        </View>
 
         <View style={styles.infoContainer}>
           <Image

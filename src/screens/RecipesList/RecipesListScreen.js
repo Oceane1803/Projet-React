@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -25,7 +24,7 @@ export default function RecipesList() {
     if (!categoryId) return;
 
     axios
-      .get("http://172.20.10.13:3000/recettes")
+      .get("http://192.168.43.78:3000/recettes")
       .then((res) => {
         const filtered = res.data.filter(
           (recipe) => Number(recipe.id_categories) === Number(categoryId)
@@ -61,41 +60,10 @@ export default function RecipesList() {
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
         </View>
-=======
-import React, { useLayoutEffect } from "react";
-import { FlatList, Text, View, TouchableHighlight, Image } from "react-native";
-import styles from "./styles";
-import { getRecipes, getCategoryName } from "../../data/MockDataAPI";
-
-export default function RecipesListScreen(props) {
-  const { navigation, route } = props;
-
-  const item = route?.params?.category;
-  const recipesArray = getRecipes(item.id);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params?.title,
-      headerRight: () => <View />,
-    });
-  }, []);
-
-  const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
-  };
-
-  const renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
-      <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
->>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
       </View>
     </TouchableHighlight>
   );
 
-<<<<<<< HEAD
   if (!categoryId) {
     return (
       <View style={styles.centered}>
@@ -170,11 +138,3 @@ const styles = StyleSheet.create({
     color: "red",
   },
 });
-=======
-  return (
-    <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipesArray} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
-    </View>
-  );
-}
->>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
