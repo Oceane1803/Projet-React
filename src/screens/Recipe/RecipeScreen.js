@@ -34,14 +34,12 @@ export default function RecipeScreen(props) {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`http://192.168.43.78:3000/recettes/${recipeId}`)
+    axios.get(`http://192.168.43.78:3000/recettes/${recipeId}`)
       .then((response) => {
         const data = response.data;
         
         console.log("Données reçues de l'API:", data);
         
-        // Utiliser les vrais noms de la BDD
         const recette = {
           id: data.id_recettes,
           title: data.Nom || "Titre non disponible",
