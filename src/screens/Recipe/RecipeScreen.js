@@ -31,7 +31,7 @@ export default function RecipeScreen(props) {
       headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
       headerRight: () => <View />,
     });
-  }, []);
+  }, [navigation]);
 
   useEffect(() => {
     axios.get(`http://192.168.43.78:3000/recettes/${recipeId}`)
@@ -120,6 +120,13 @@ export default function RecipeScreen(props) {
       <View style={styles.infoRecipeContainer}>
         <Text style={styles.infoRecipeName}>{item.title}</Text>
 
+<<<<<<< HEAD
+        {item.category && (
+          <View style={styles.infoContainer}>
+            <Text style={styles.category}>{item.category.toUpperCase()}</Text>
+          </View>
+        )}
+=======
         <View style={styles.infoContainer}>
           <Text style={styles.category}>
             {(item.category || "Non catégorisé").toUpperCase()}

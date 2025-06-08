@@ -28,7 +28,11 @@ export default function HomeScreen(props) {
 
   const fetchRecipes = async () => {
     try {
+<<<<<<< HEAD
+      const response = await fetch("http://172.20.10.13:3000/recettes");
+=======
       const response = await fetch("http://192.168.43.78:3000/recettes");
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
       const json = await response.json();
       const formattedData = json.map((item) => ({
         recipeId: item.id_recettes,
@@ -72,4 +76,8 @@ export default function HomeScreen(props) {
       )}
     </View>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e013545b2dad303f8714a4a563f2369deabf13ec
