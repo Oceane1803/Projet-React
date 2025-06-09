@@ -43,7 +43,6 @@ export default function RecipeScreen(props) {
         const recette = {
           id: data.id_recettes,
           title: data.Nom || "Titre non disponible",
-          description: data.Description || "Description non disponible",
           instruction: data.Instruction || "Instructions non disponibles",
           time: data.temps_preparation && typeof data.temps_preparation === 'string' 
             ? parseInt(data.temps_preparation.split(":")[1]) 
