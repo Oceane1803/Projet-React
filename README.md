@@ -20,9 +20,13 @@ MySQL
 ⚙️ Fonctionnalités
 
 ✅ Affichage des recettes avec images, ingrédients et étapes
+
 ✅ Création de recettes
+
 ✅ Authentification des utilisateurs
+
 ✅ Communication via API Express
+
 ✅ Stockage des données dans MySQL
 
 🚀 Installation et lancement du projet
