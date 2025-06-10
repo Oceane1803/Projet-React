@@ -29,13 +29,15 @@ MySQL
 
 ✅ Stockage des données dans MySQL
 
+
 🚀 Installation et lancement du projet
+
 
 1. Cloner le dépôt
    
 https://github.com/Oceane1803/Projet-React.git /!\ Ne pas oublier de récupérer le serveur d'API dans la branche "backend"
 
-3. Installer les dépendances
+2. Installer les dépendances
    
 Frontend :
 
@@ -47,7 +49,7 @@ Backend :
 cd ../server
 npm install
 
-4. Configuration de la base de données
+3. Configuration de la base de données
    
 Créer une base MySQL nommée instafood (ou autre, selon votre fichier .env)
 
@@ -59,12 +61,12 @@ DB_PASSWORD=yourpassword
 DB_NAME=instafood
 PORT=3000
 
-6. Lancer le backend
+4. Lancer le backend
    
 cd server
 npm start
 
-8. Lancer l'application mobile
+5. Lancer l'application mobile
    
 cd ../client
 npm start
