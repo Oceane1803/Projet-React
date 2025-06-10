@@ -1,37 +1,56 @@
-# Recipes App in React Native
+📱 InstaFood
+InstaFood est une application mobile de partage et de consultation de recettes de cuisine, développée en React Native pour le front-end. Elle communique avec une API backend développée en Express.js et utilise une base de données MySQL pour stocker les recettes et les informations utilisateur.
 
-<center><a href="https://instamobile.io/app-templates/food-app-template/"><img src="https://www.instamobile.io/wp-content/uploads/2019/07/Screen-Shot-2019-07-22-at-8.56.44-PM.png" /></a></center>
+🔧 Technologies utilisées
 
-Download this beautiful free React Native starter kit, featuring a recipes app, to bootstrap your mobile app development. Learn React Native by working on a real project. Get familiar with various native components, navigation, redux and more.
+Frontend :
 
-## Getting Started
+React Native
+Expo
+React Navigation
+Axios
 
-To run the app, simply runsdsd
+Backend :
 
-```yarn install && expo start```
+Node.js
+Express.js
+MySQL
 
-And scan the QR code in the Expo client app.
+⚙️ Fonctionnalités
 
-## Expo Demo
+✅ Affichage des recettes avec images, ingrédients et étapes
+✅ Création de recettes
+✅ Authentification des utilisateurs
+✅ Communication via API Express
+✅ Stockage des données dans MySQL
 
-<center><a href=""><img src="https://instamobile.io/wp-content/uploads/2019/07/Screen-Shot-2019-07-22-at-8.20.29-PM.png" /></a></center>
+🚀 Installation et lancement du projet
 
-## Features
+1. Cloner le dépôt
+https://github.com/Oceane1803/Projet-React.git /!\ Ne pas oublier de récupérer le serveur d'API dans la branche "backend"
 
-- Recipes List
-- Categories
-- Ingredients
-- Recipes Details Screen
-- Photo Gallery
-- Detailed Description
-- Ingredients button
-- Ingredients List
-- Recipes by Ingredient
-- Search
-- Drawer Menu
-- Navigation Bar
-- Beautiful UI Design Kit
-- Compatible with Expo
-- Highly modularized codebase
+3. Installer les dépendances
+Frontend :
+cd client
+npm install
 
-Coded with 💖💖💖 by <a href="https://instamobile.io/">Instamobile</a>, <a href="https://instaflutter.com/">Instaflutter</a>. and <a href="https://instakotlin.com/">Instakotlin</a>.
+Backend :
+cd ../server
+npm install
+
+4. Configuration de la base de données
+Créer une base MySQL nommée instafood (ou autre, selon votre fichier .env)
+Créer un fichier .env dans /server avec les variables suivantes :
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=yourpassword
+DB_NAME=instafood
+PORT=3000
+
+5. Lancer le backend
+cd server
+npm start
+
+6. Lancer l'application mobile
+cd ../client
+npm start
