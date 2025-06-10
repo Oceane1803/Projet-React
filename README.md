@@ -1,6 +1,6 @@
 📱 InstaFood
 
-InstaFood est une application mobile de partage et de consultation de recettes de cuisine, développée en React Native pour le front-end. Elle communique avec une API backend développée en Express.js et utilise une base de données MySQL pour stocker les recettes et les informations utilisateur.
+InstaFood est une application mobile de consultation de recettes de cuisine, développée en React Native pour le front-end. Elle communique avec une API backend développée en Express.js et utilise une base de données MySQL pour stocker les recettes et les informations utilisateur.
 
 🔧 Technologies utilisées
 
